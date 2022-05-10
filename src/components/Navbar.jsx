@@ -10,10 +10,11 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import {keyframes} from "@mui/material"
+import { keyframes } from "@mui/material"
+import { Link, NavLink } from "react-router-dom";
 
-const pages = ["Home", "About", "Portfolio", "  Contact"];
-const animation =keyframes`
+const pages = ["Home", "About", "Portfolio", "Contact"];
+const animation = keyframes`
   0% {
       -webkit-transform: translatex(-200%);
       -ms-transform: translatex(-200%);
@@ -30,6 +31,7 @@ const animation =keyframes`
 `
 
 const Navbar = () => {
+  const [textColor, setTextColor] = React.useState(false)
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -40,7 +42,8 @@ const Navbar = () => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (event) => {
+    console.log(event);
     setAnchorElNav(null);
   };
 
@@ -71,23 +74,36 @@ const Navbar = () => {
               letterSpacing: ".3rem",
               color: "#FF651C",
               textDecoration: "none",
-          animation:`${animation} 1.5s `
+              animation: `${animation} 1.5s `
 
             }}
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1 ,  display: { xs: "none", md: "flex" } }} />
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }} />
 
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+              <Box
+              sx={{
+                ":hover":{
+                  display:'none'
+                }
+              }}
               >
-                {page}
-              </Button>
+                <NavLink to={page} style={({ isActive }) => {
+                  return {
+                    color: isActive ? '#FF651C' : 'white',
+                    display: "block",
+                    textDecoration: 'none',
+                    margin: 20,
+                    fontWeight: '700'
+                  }
+                }}>
+
+                  {page}
+                </NavLink>
+              </Box>
             ))}
           </Box>
 
@@ -110,7 +126,7 @@ const Navbar = () => {
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1 ,  display: { xs: "flex", md: "none" } }} />
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }} />
 
           <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -121,7 +137,7 @@ const Navbar = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon fontSize="large"/>
+              <MenuIcon fontSize="large" />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -139,12 +155,14 @@ const Navbar = () => {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
-                
+
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} sx={{backgroundColor: "#212121"}}>
-                  <Typography textAlign="center" sx={{ fontWeight: 700, }}>{page}</Typography>
+                <MenuItem key={page} onClick={handleCloseNavMenu} sx={{ backgroundColor: "#212121" }}>
+                  <NavLink to={page} style={({ isActive }) => { return { color: isActive ? "#FF651C" : "white" } }}>
+                    <Button textAlign="center" sx={{ fontWeight: 700, }}>{page}</Button>
+                  </NavLink>
                 </MenuItem>
               ))}
             </Menu>
