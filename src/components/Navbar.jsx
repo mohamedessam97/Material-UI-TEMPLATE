@@ -85,13 +85,11 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Box
-              sx={{
-                ":hover":{
-                  display:'none'
-                }
-              }}
+              
               >
-                <NavLink to={page} style={({ isActive }) => {
+                <NavLink to={page} 
+                
+                style={({ isActive }) => {
                   return {
                     color: isActive ? '#FF651C' : 'white',
                     display: "block",
